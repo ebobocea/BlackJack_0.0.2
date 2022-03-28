@@ -32,29 +32,24 @@ class ViewController: UIViewController {
     var playerImages: [UIImageView] = []
     var dealerImages: [UIImageView] = []
     
+    var xValueForImagePlayer = 10
+    var xValueForImageDealer = 10
+    let yValueForImagePlayer = 530
+    let yValueForImageDealer = 130
     
-    @IBOutlet weak var dealerCardOneImage: UIImageView!
-    @IBOutlet weak var dealerCardTwoImage: UIImageView!
-    @IBOutlet weak var dealerCardThreeImage: UIImageView!
-    @IBOutlet weak var dealerCardFourImage: UIImageView!
-    @IBOutlet weak var dealerCardFiveImage: UIImageView!
-    @IBOutlet weak var dealerCardSixImage: UIImageView!
-    @IBOutlet weak var dealerCardSevenImage: UIImageView!
-
-    
-    @IBOutlet weak var playerCardOneImage: UIImageView!
-    @IBOutlet weak var playerCardTwoImage: UIImageView!
-    @IBOutlet weak var playerCardThreeImage: UIImageView!
-    @IBOutlet weak var playerCardFourImage: UIImageView!
-    @IBOutlet weak var playerCardFiveImage: UIImageView!
-    @IBOutlet weak var playerCardSixImage: UIImageView!
-    @IBOutlet weak var playerCardSevenImage: UIImageView!
     
     @IBOutlet weak var resultLabel: UILabel!
+    @IBOutlet weak var dealerCardValue: UILabel!
+    @IBOutlet weak var playerCardValue: UILabel!
+    
+    @IBOutlet weak var hitButton: UIButton!
+    @IBOutlet weak var standButton: UIButton!
+    @IBOutlet weak var playAgainButton: UIButton!
+    
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         //Adding two
         deckOfCards.append(twoC)
@@ -321,28 +316,22 @@ class ViewController: UIViewController {
         deckOfCards.append(aceS4)
         
         deckOfCards.shuffle()
-        
-        playerImages.append(playerCardOneImage)
-        playerImages.append(playerCardTwoImage)
-        playerImages.append(playerCardThreeImage)
-        playerImages.append(playerCardFourImage)
-        playerImages.append(playerCardFiveImage)
-        playerImages.append(playerCardSixImage)
-        playerImages.append(playerCardSevenImage)
-        
-        dealerImages.append(dealerCardOneImage)
-        dealerImages.append(dealerCardTwoImage)
-        dealerImages.append(dealerCardThreeImage)
-        dealerImages.append(dealerCardFourImage)
-        dealerImages.append(dealerCardFiveImage)
-        dealerImages.append(dealerCardSixImage)
-        dealerImages.append(dealerCardSevenImage)
-        
+        print(deckOfCards.count)
         resetGame()
         
+        
+    }
+    func createImage(xLocation: Int, yLocation: Int, imageToAdd: UIImage) -> UIImageView{
+        let imgView = UIImageView()
+        imgView.frame = CGRect(x: xLocation, y: yLocation, width: 100, height: 150)
+        imgView.image = imageToAdd//Assign image to ImageView
+        view.addSubview(imgView)//Add image to our view
+        return imgView
     }
 
     @IBAction func hitButton(_ sender: UIButton) {
+        
+    
         playerPullACard()
         
         print("Value of cards for player: \(valueOfPlayerCards)")
@@ -350,10 +339,13 @@ class ViewController: UIViewController {
         
         
     }
-    @IBAction func standButton(_ sender: UIButton) {
+    @IBAction func standButton(_ sender: UIButton){
+        
+        
         dealerPullCards()
         if dealerBlackJack {
             resultLabel.text = "Dealer has Blackjack"
+            
         } else if !dealerBust && valueOfDealerCards > valueOfPlayerCards{
             resultLabel.text = "Dealer wins with: \(valueOfDealerCards)"
         } else if valueOfPlayerCards == valueOfDealerCards {
@@ -363,16 +355,36 @@ class ViewController: UIViewController {
             resultLabel.text = "Player Win"
         }
         
+       buttonsUnhide()
+        
     }
     
     @IBAction func playAgain(_ sender: UIButton) {
         resetGame()
+        
+    }
+    func buttonsUnhide(){
+        playAgainButton.isHidden = false
+        standButton.isHidden = true
+        hitButton.isHidden = true
+        
+    }
+    func buttonsHide(){
+        playAgainButton.isHidden = true
+        standButton.isHidden = false
+        hitButton.isHidden = false
+
     }
     
     func resetGame(){
+        buttonsHide()
         
         print("---------------------")
+        xValueForImagePlayer = 10
+        xValueForImageDealer = 10
+        
         resultLabel.text = ""
+        
         playerBust = false
         dealerBust = false
         
@@ -391,11 +403,16 @@ class ViewController: UIViewController {
         playerHand.removeAll()
         dealerHand.removeAll()
         
+        
+        
         playerHand = [deckOfCards.removeFirst(), deckOfCards.removeFirst()]
         dealerHand = [deckOfCards.removeFirst(), deckOfCards.removeFirst()]
         
         valueOfPlayerCards = calculateHandValue(handDek: playerHand)
         valueOfDealerCards = calculateHandValue(handDek: dealerHand)
+        
+        playerCardValue.text = "\(valueOfPlayerCards)"
+        dealerCardValue.text = "\(dealerHand[0].value)"
         
         for image in playerImages{
             image.image = nil
@@ -403,14 +420,20 @@ class ViewController: UIViewController {
         for image in dealerImages{
             image.image = nil
         }
+        dealerImages.removeAll()
+        playerImages.removeAll()
         
-        dealerImages[dealerHitCounter].image = dealerHand[dealerHitCounter].image
-        dealerHitCounter += 1
-        dealerImages[dealerHitCounter].image = UIImage(named: "gray_back")!
         
-        playerImages[playerHitCounter].image = playerHand[playerHitCounter].image
+        dealerImages.append(createImage(xLocation: xValueForImageDealer, yLocation: yValueForImageDealer, imageToAdd: dealerHand[dealerHitCounter].image))
+        playerImages.append(createImage(xLocation: xValueForImagePlayer, yLocation: yValueForImagePlayer, imageToAdd: playerHand[playerHitCounter].image))
+        
+        xValueForImagePlayer += 50
+        xValueForImageDealer += 50
         playerHitCounter += 1
-        playerImages[playerHitCounter].image = playerHand[playerHitCounter].image
+        dealerHitCounter += 1
+        
+        dealerImages.append(createImage(xLocation: xValueForImageDealer, yLocation: yValueForImageDealer, imageToAdd: UIImage(named: "gray_back")!))
+        playerImages.append(createImage(xLocation: xValueForImagePlayer, yLocation: yValueForImagePlayer, imageToAdd: playerHand[playerHitCounter].image))
         
         playerHasAce = hasAce(hand: playerHand)
         dealerHasAce = hasAce(hand: dealerHand)
@@ -429,42 +452,54 @@ class ViewController: UIViewController {
     func checkForBlackJack(){
         if playerBlackJack {
             resultLabel.text = "Player has Blackjack"
+            buttonsUnhide()
         } else if dealerBlackJack && dealerHand[0].name == "ACE" {
             dealerImages[dealerHitCounter].image = dealerHand[dealerHitCounter].image
             resultLabel.text = "Dealer has Blackjack"
+            buttonsUnhide()
         } else if dealerBlackJack && dealerHand[0].name == "ACE" && playerBlackJack{
             resultLabel.text = "Draw on Blackjack"
+            buttonsUnhide()
         }
     }
     
     func dealerPullCards(){
         dealerImages[dealerHitCounter].image = dealerHand[dealerHitCounter].image
+        dealerCardValue.text = "\(valueOfDealerCards)"
         while valueOfDealerCards < 17 {
             dealerHand.append(deckOfCards.removeFirst())
             valueOfDealerCards = calculateHandValue(handDek: dealerHand)
+            dealerCardValue.text = "\(valueOfDealerCards)"
             dealerHasAce = hasAce(hand: dealerHand)
             valueOfDealerCards -= calculateValueWithAce(valueOfHand: valueOfDealerCards, handHasAce: dealerHasAce)
+            dealerCardValue.text = "\(valueOfDealerCards)"
             dealerHitCounter += 1
-            dealerImages[dealerHitCounter].image = dealerHand[dealerHitCounter].image
+            xValueForImageDealer += 50
+            dealerImages.append(createImage(xLocation: xValueForImageDealer, yLocation: yValueForImageDealer, imageToAdd: dealerHand[dealerHitCounter].image))
             print("Value of cards for dealer: \(valueOfDealerCards)")
             print("Delear has Ace: \(dealerHasAce)")
         }
         if valueOfDealerCards > 21 {
             resultLabel.text = "Dealer bust with: \(valueOfDealerCards)"
             dealerBust =  true
+            buttonsUnhide()
             
         }
     }
     func playerPullACard(){
         playerHand.append(deckOfCards.removeFirst())
         valueOfPlayerCards = calculateHandValue(handDek: playerHand)
+        playerCardValue.text = "\(valueOfPlayerCards)"
         playerHasAce = hasAce(hand: playerHand)
         valueOfPlayerCards -= calculateValueWithAce(valueOfHand: valueOfPlayerCards, handHasAce: playerHasAce)
+        playerCardValue.text = "\(valueOfPlayerCards)"
         playerHitCounter += 1
-        playerImages[playerHitCounter].image = playerHand[playerHitCounter].image
+        xValueForImagePlayer += 50
+        playerImages.append(createImage(xLocation: xValueForImagePlayer, yLocation: yValueForImagePlayer, imageToAdd: playerHand[playerHitCounter].image))
         if valueOfPlayerCards > 21 {
             resultLabel.text = "Player Bust"
             playerBust = true
+            buttonsUnhide()
             dealerPullCards()
         }
     }
