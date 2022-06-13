@@ -14,6 +14,8 @@
 		E62CEA5E27EF160F00B7C099 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E62CEA5D27EF160F00B7C099 /* Assets.xcassets */; };
 		E62CEA6127EF160F00B7C099 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E62CEA5F27EF160F00B7C099 /* LaunchScreen.storyboard */; };
 		E62CEA7C27EFCE3000B7C099 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62CEA7B27EFCE3000B7C099 /* Card.swift */; };
+		E68A76DE2857296800F8FC43 /* PlayerLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68A76DD2857296800F8FC43 /* PlayerLogic.swift */; };
+		E68A76E028572C9E00F8FC43 /* DeckOfCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68A76DF28572C9E00F8FC43 /* DeckOfCards.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		E62CEA6027EF160F00B7C099 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E62CEA6227EF160F00B7C099 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E62CEA7B27EFCE3000B7C099 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		E68A76DD2857296800F8FC43 /* PlayerLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerLogic.swift; sourceTree = "<group>"; };
+		E68A76DF28572C9E00F8FC43 /* DeckOfCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckOfCards.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +65,9 @@
 				E62CEA5427EF160C00B7C099 /* AppDelegate.swift */,
 				E62CEA5627EF160C00B7C099 /* SceneDelegate.swift */,
 				E62CEA5827EF160C00B7C099 /* ViewController.swift */,
+				E68A76DD2857296800F8FC43 /* PlayerLogic.swift */,
 				E62CEA7B27EFCE3000B7C099 /* Card.swift */,
+				E68A76DF28572C9E00F8FC43 /* DeckOfCards.swift */,
 				E62CEA5A27EF160C00B7C099 /* Main.storyboard */,
 				E62CEA5D27EF160F00B7C099 /* Assets.xcassets */,
 				E62CEA5F27EF160F00B7C099 /* LaunchScreen.storyboard */,
@@ -142,6 +148,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E62CEA5927EF160C00B7C099 /* ViewController.swift in Sources */,
+				E68A76E028572C9E00F8FC43 /* DeckOfCards.swift in Sources */,
+				E68A76DE2857296800F8FC43 /* PlayerLogic.swift in Sources */,
 				E62CEA5527EF160C00B7C099 /* AppDelegate.swift in Sources */,
 				E62CEA5727EF160C00B7C099 /* SceneDelegate.swift in Sources */,
 				E62CEA7C27EFCE3000B7C099 /* Card.swift in Sources */,

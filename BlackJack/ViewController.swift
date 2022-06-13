@@ -9,7 +9,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var deckOfCards: [Card] = []
+//    var deckOfCards: [Card] = []
+    var cardDeck = DeckOfCards(howManyDecks: 4)
     
     var playerBust = false
     var dealerBust = false
@@ -57,33 +58,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        create4DecksOfCards()
-        print(deckOfCards.count)
+        cardDeck.createDecksOfCards()
         resetGame()
         
-        
-    }
-    func create4DecksOfCards(){
-        for _ in 1...4{
-            createOneDeckOfCards()
-        }
-        deckOfCards.shuffle()
-
-    }
-    func createOneDeckOfCards(){
-        let cards = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
-
-        let valueOfCards = ["2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11]
-
-        let suitOfCards = ["C", "D", "H", "S"]
-
-
-        for suitOfCard in suitOfCards {
-            for card in cards {
-                deckOfCards.append(Card(name: card, value: valueOfCards[card]!, image:UIImage(named: card+suitOfCard)!))
-            }
-        }
     }
     
     func createImage(xLocation: Int, yLocation: Int, imageToAdd: UIImage) -> UIImageView{
@@ -177,10 +154,10 @@ class ViewController: UIViewController {
         
         
         //Player Pull First Card
-        playerHand.append(deckOfCards.removeFirst())
+        playerHand.append(cardDeck.deckOfCards.removeFirst())
         playerHasAce = hasAce(hand: playerHand)
         //Player Pull Second Card
-        playerHand.append(deckOfCards.removeFirst())
+        playerHand.append(cardDeck.deckOfCards.removeFirst())
         //Calculate Value
         valueOfPlayerCards = calculateHandValue(handDek: playerHand)
         
@@ -199,11 +176,11 @@ class ViewController: UIViewController {
         }
         
         //Dealer Pull First Card
-        dealerHand.append(deckOfCards.removeFirst())
+        dealerHand.append(cardDeck.deckOfCards.removeFirst())
         dealerHasAce = hasAce(hand: dealerHand)
         
         //Dealer Pull Second Card
-        dealerHand.append(deckOfCards.removeFirst())
+        dealerHand.append(cardDeck.deckOfCards.removeFirst())
         
         //Calculate Value
         valueOfDealerCards = calculateHandValue(handDek: dealerHand)
@@ -285,7 +262,7 @@ class ViewController: UIViewController {
         
         while valueOfDealerCards < 17 {
             
-            dealerHand.append(deckOfCards.removeFirst())
+            dealerHand.append(cardDeck.deckOfCards.removeFirst())
             valueOfDealerCards = calculateHandValue(handDek: dealerHand)
             dealerCardValue.text = "\(valueOfDealerCards)"
             dealerHasAce = hasAce(hand: dealerHand)
@@ -310,7 +287,7 @@ class ViewController: UIViewController {
     }
     func playerPullACard(){
         checkForDeckEmpty()
-        playerHand.append(deckOfCards.removeFirst())
+        playerHand.append(cardDeck.deckOfCards.removeFirst())
         valueOfPlayerCards = calculateHandValue(handDek: playerHand)
         playerCardValue.text = "\(valueOfPlayerCards)"
         playerHasAce = hasAce(hand: playerHand)
@@ -333,9 +310,9 @@ class ViewController: UIViewController {
         
     }
     func checkForDeckEmpty(){
-        if deckOfCards.count < 4 {
+        if cardDeck.deckOfCards.count < 4 {
             print("Deck was empty, new one created")
-            create4DecksOfCards()
+            cardDeck.createDecksOfCards()
         }
     }
     
