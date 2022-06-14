@@ -9,7 +9,6 @@ import UIKit
 
 class ViewController: UIViewController {
     
-//    var deckOfCards: [Card] = []
     var cardDeck = DeckOfCards(howManyDecks: 4)
     
     var playerBust = false
@@ -120,7 +119,7 @@ class ViewController: UIViewController {
     
     func resetGame(){
         buttonsHide()
-        checkForDeckEmpty()
+        cardDeck.checkForDeckEmpty()
         
         print("---------------------")
         xValueForImagePlayer = 10
@@ -256,7 +255,7 @@ class ViewController: UIViewController {
     }
     
     func dealerPullCards(){
-        checkForDeckEmpty()
+        cardDeck.checkForDeckEmpty()
         dealerImages[dealerHitCounter].image = dealerHand[dealerHitCounter].image
         dealerCardValue.text = "\(valueOfDealerCards)"
         
@@ -286,7 +285,7 @@ class ViewController: UIViewController {
         }
     }
     func playerPullACard(){
-        checkForDeckEmpty()
+        cardDeck.checkForDeckEmpty()
         playerHand.append(cardDeck.deckOfCards.removeFirst())
         valueOfPlayerCards = calculateHandValue(handDek: playerHand)
         playerCardValue.text = "\(valueOfPlayerCards)"
@@ -309,12 +308,7 @@ class ViewController: UIViewController {
         }
         
     }
-    func checkForDeckEmpty(){
-        if cardDeck.deckOfCards.count < 4 {
-            print("Deck was empty, new one created")
-            cardDeck.createDecksOfCards()
-        }
-    }
+    
     
     func calculateValueWithAce(valueOfHand: Int, handHasAce: Bool) -> Int{
 

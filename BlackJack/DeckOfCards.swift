@@ -35,4 +35,10 @@ struct DeckOfCards{
             createOneDeckOfCards()
         }
     }
+    mutating func checkForDeckEmpty(){
+        if deckOfCards.count < 4 {
+            print("Deck was empty, new one created")
+            createDecksOfCards()
+        }
+    }
 }

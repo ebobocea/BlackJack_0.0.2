@@ -16,6 +16,7 @@
 		E62CEA7C27EFCE3000B7C099 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62CEA7B27EFCE3000B7C099 /* Card.swift */; };
 		E68A76DE2857296800F8FC43 /* PlayerLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68A76DD2857296800F8FC43 /* PlayerLogic.swift */; };
 		E68A76E028572C9E00F8FC43 /* DeckOfCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68A76DF28572C9E00F8FC43 /* DeckOfCards.swift */; };
+		E6B71EED2857748E004A2E40 /* ValueOfCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B71EEC2857748E004A2E40 /* ValueOfCards.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		E62CEA7B27EFCE3000B7C099 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		E68A76DD2857296800F8FC43 /* PlayerLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerLogic.swift; sourceTree = "<group>"; };
 		E68A76DF28572C9E00F8FC43 /* DeckOfCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckOfCards.swift; sourceTree = "<group>"; };
+		E6B71EEC2857748E004A2E40 /* ValueOfCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueOfCards.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				E62CEA5D27EF160F00B7C099 /* Assets.xcassets */,
 				E62CEA5F27EF160F00B7C099 /* LaunchScreen.storyboard */,
 				E62CEA6227EF160F00B7C099 /* Info.plist */,
+				E6B71EEC2857748E004A2E40 /* ValueOfCards.swift */,
 			);
 			path = BlackJack;
 			sourceTree = "<group>";
@@ -152,6 +155,7 @@
 				E68A76DE2857296800F8FC43 /* PlayerLogic.swift in Sources */,
 				E62CEA5527EF160C00B7C099 /* AppDelegate.swift in Sources */,
 				E62CEA5727EF160C00B7C099 /* SceneDelegate.swift in Sources */,
+				E6B71EED2857748E004A2E40 /* ValueOfCards.swift in Sources */,
 				E62CEA7C27EFCE3000B7C099 /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
