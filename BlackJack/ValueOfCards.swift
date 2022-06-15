@@ -8,32 +8,21 @@
 import Foundation
 
 struct ValueOfCards {
-    
+    static var softhand = false
     
     static func calculateHandValue(handDeck: [Card]) -> Int{
         var valuteToReturn = 0
-        var numberOfAces = 0
-        var twoAces = false
         
-        if handDeck[0].name == "A" && handDeck[1].name == "A"{
-            twoAces = true
-        }
         for card in handDeck {
             valuteToReturn += card.value
-            if card.name == "A"{
-                numberOfAces += 1
+            if card.name == "A" && valuteToReturn < 12{
+                valuteToReturn += 10
+                softhand = true
             }
         }
-        if valuteToReturn > 21 && numberOfAces >= 1 {
-            if twoAces {
-                valuteToReturn += 10
-            }
-            for _ in 1...numberOfAces {
-                valuteToReturn -= 10
-            }
-            if handDeck.count >= 3 && twoAces && valuteToReturn > 21{
-                valuteToReturn -= 10
-            }
+        if softhand && valuteToReturn > 21 {
+            valuteToReturn -= 10
+            softhand = false
         }
         return valuteToReturn
     }

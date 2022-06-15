@@ -67,6 +67,7 @@
 				E62CEA5427EF160C00B7C099 /* AppDelegate.swift */,
 				E62CEA5627EF160C00B7C099 /* SceneDelegate.swift */,
 				E62CEA5827EF160C00B7C099 /* ViewController.swift */,
+				E6B71EEC2857748E004A2E40 /* ValueOfCards.swift */,
 				E68A76DD2857296800F8FC43 /* PlayerLogic.swift */,
 				E62CEA7B27EFCE3000B7C099 /* Card.swift */,
 				E68A76DF28572C9E00F8FC43 /* DeckOfCards.swift */,
@@ -74,7 +75,6 @@
 				E62CEA5D27EF160F00B7C099 /* Assets.xcassets */,
 				E62CEA5F27EF160F00B7C099 /* LaunchScreen.storyboard */,
 				E62CEA6227EF160F00B7C099 /* Info.plist */,
-				E6B71EEC2857748E004A2E40 /* ValueOfCards.swift */,
 			);
 			path = BlackJack;
 			sourceTree = "<group>";

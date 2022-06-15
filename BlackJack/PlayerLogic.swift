@@ -7,50 +7,41 @@
 
 import UIKit
 
-class PlayerLogic{
+struct PlayerLogic{
 
     var isBust = false
     var hasBlackJack = false
     var hasAce = false
     var valueOfCards = 0
-    var hitCounter = 0
+    var hitCounter = -1
     var handCards: [Card] = []
     var cardImages: [UIImageView] = []
-    var xValueForImage = 10
+    var xValueForImage = -40
     var yValueForImage: Int = 0
+    var softHand = false
 
     init(addYValue startingYValue: Int) {
         self.yValueForImage = startingYValue
     }
 
-    func playerReceiveACard(cardForPlayer cardGiven: Card){
-        //deckOfCard.checkForDeckEmpty()
-        
+    mutating func receiveACard(cardToReceive cardGiven: Card){
         //Receive Card
-        self.handCards.append(cardGiven)
-        //Calculate Value Of Entire Hand
-        valueOfCards = ValueOfCards.calculateHandValue(handDeck: self.handCards)
+        handCards.append(cardGiven)
         //Check For Ace In Hand
-        self.hasAce = ValueOfCards.hasAce(hand: self.handCards)
-
-        //playerCardValue.text = "\(valueOfPlayerCards)"
+        hasAce = ValueOfCards.hasAce(hand: handCards)
+        
+        //Calculate Value Of Entire Hand
+        valueOfCards = ValueOfCards.calculateHandValue(handDeck: handCards)
+        //Check For Blackjack
+        hasBlackJack = ValueOfCards.isBlackJack(valueOfCards: valueOfCards, hasAce: hasAce)
+        softHand = ValueOfCards.softhand
+        //Increment values for Image Creation
         hitCounter += 1
         xValueForImage += 50
-        cardImages.append(createImage(xLocation: xValueForImage, yLocation: yValueForImage, imageToAdd: handCards[hitCounter].image))
-        
-        
+        //Determine If Bust
         if valueOfCards > 21 {
-            //resultLabel.text = "Player Bust"
             isBust = true
-            
         }
+    }
 
-    }
-    private func createImage(xLocation: Int, yLocation: Int, imageToAdd: UIImage) -> UIImageView{
-        let imgView = UIImageView()
-        imgView.frame = CGRect(x: xLocation, y: yLocation, width: 100, height: 150)
-        imgView.image = imageToAdd//Assign image to ImageView
-        //view.addSubview(imgView)//Add image to our view
-        return imgView
-    }
 }
