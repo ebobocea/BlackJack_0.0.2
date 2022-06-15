@@ -8,50 +8,49 @@
 import UIKit
 
 class PlayerLogic{
-    
-    let isBust = false
-    let hasBlackJack = false
+
+    var isBust = false
+    var hasBlackJack = false
     var hasAce = false
-    let deductedTwoAces = false
     var valueOfCards = 0
-    let hitCounter = 0
-    var handCards: [Card]
-    let acesInHand = 0
-    let cardImages: [UIImageView] = []
-    let xValueForImage = 10
-    let yValueForImage: Int
-    
+    var hitCounter = 0
+    var handCards: [Card] = []
+    var cardImages: [UIImageView] = []
+    var xValueForImage = 10
+    var yValueForImage: Int = 0
+
     init(addYValue startingYValue: Int) {
-        yValueForImage = startingYValue
+        self.yValueForImage = startingYValue
     }
-    
+
     func playerReceiveACard(cardForPlayer cardGiven: Card){
         //deckOfCard.checkForDeckEmpty()
+        
         //Receive Card
         self.handCards.append(cardGiven)
         //Calculate Value Of Entire Hand
         valueOfCards = ValueOfCards.calculateHandValue(handDeck: self.handCards)
         //Check For Ace In Hand
         self.hasAce = ValueOfCards.hasAce(hand: self.handCards)
+
+        //playerCardValue.text = "\(valueOfPlayerCards)"
+        hitCounter += 1
+        xValueForImage += 50
+        cardImages.append(createImage(xLocation: xValueForImage, yLocation: yValueForImage, imageToAdd: handCards[hitCounter].image))
         
         
-        if valueOfPlayerCards > 21 && playerHasAce{
-            valueOfPlayerCards -= forEachAceInHand(hand: playerHand)
-            if playerDeductedTwoAces{
-                valueOfPlayerCards += 10
-            }
+        if valueOfCards > 21 {
+            //resultLabel.text = "Player Bust"
+            isBust = true
+            
         }
-        
-        playerCardValue.text = "\(valueOfPlayerCards)"
-        playerHitCounter += 1
-        xValueForImagePlayer += 50
-        playerImages.append(createImage(xLocation: xValueForImagePlayer, yLocation: yValueForImagePlayer, imageToAdd: playerHand[playerHitCounter].image))
-        if valueOfPlayerCards > 21 {
-            resultLabel.text = "Player Bust"
-            playerBust = true
-            buttonsUnhide()
-            dealerPullCards()
-        }
-        
+
+    }
+    private func createImage(xLocation: Int, yLocation: Int, imageToAdd: UIImage) -> UIImageView{
+        let imgView = UIImageView()
+        imgView.frame = CGRect(x: xLocation, y: yLocation, width: 100, height: 150)
+        imgView.image = imageToAdd//Assign image to ImageView
+        //view.addSubview(imgView)//Add image to our view
+        return imgView
     }
 }

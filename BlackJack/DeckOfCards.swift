@@ -28,6 +28,7 @@ struct DeckOfCards{
                 deckOfCards.append(Card(name: card, value: valueOfCards[card]!, image:UIImage(named: card+suitOfCard)!))
             }
         }
+        
     }
     
     mutating func createDecksOfCards(){
@@ -40,5 +41,6 @@ struct DeckOfCards{
             print("Deck was empty, new one created")
             createDecksOfCards()
         }
+        deckOfCards.shuffle()
     }
 }

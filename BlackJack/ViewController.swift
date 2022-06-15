@@ -84,7 +84,7 @@ class ViewController: UIViewController {
         
         
         dealerPullCards()
-        if dealerBlackJack {
+        if dealerBlackJack && dealerHand[1].name == "A" {
             resultLabel.text = "Dealer has Blackjack"
             
         } else if !dealerBust && valueOfDealerCards > valueOfPlayerCards{
@@ -154,51 +154,21 @@ class ViewController: UIViewController {
         
         //Player Pull First Card
         playerHand.append(cardDeck.deckOfCards.removeFirst())
-        playerHasAce = hasAce(hand: playerHand)
+
         //Player Pull Second Card
         playerHand.append(cardDeck.deckOfCards.removeFirst())
-        //Calculate Value
-        valueOfPlayerCards = calculateHandValue(handDek: playerHand)
-        
-        //Check For Ace
         playerHasAce = hasAce(hand: playerHand)
-        if playerHasAce {
-            for card in playerHand{
-                if card.name == "A"{
-                    playerAcesInHand += 1
-                }
-            }
-        }
-        if playerAcesInHand == 2 {
-            valueOfPlayerCards -= 10
-            playerDeductedTwoAces = true
-        }
+        //Calculate Value
+        valueOfPlayerCards = calculateHandValue(handDeck: playerHand)
+
         
         //Dealer Pull First Card
         dealerHand.append(cardDeck.deckOfCards.removeFirst())
-        dealerHasAce = hasAce(hand: dealerHand)
-        
         //Dealer Pull Second Card
         dealerHand.append(cardDeck.deckOfCards.removeFirst())
-        
-        //Calculate Value
-        valueOfDealerCards = calculateHandValue(handDek: dealerHand)
-        
-        //Check For Ace
         dealerHasAce = hasAce(hand: dealerHand)
-        if dealerHasAce {
-            for card in dealerHand{
-                if card.name == "A"{
-                    dealerAcesInHand += 1
-                }
-            }
-        }
-        if dealerAcesInHand == 2 {
-            valueOfDealerCards -= 10
-            dealerDeductedTwoAces = true
-        }
-        
-        
+        //Calculate Value
+        valueOfDealerCards = calculateHandValue(handDeck: dealerHand)
         
         
         playerCardValue.text = "\(valueOfPlayerCards)"
@@ -262,21 +232,15 @@ class ViewController: UIViewController {
         while valueOfDealerCards < 17 {
             
             dealerHand.append(cardDeck.deckOfCards.removeFirst())
-            valueOfDealerCards = calculateHandValue(handDek: dealerHand)
+            valueOfDealerCards = calculateHandValue(handDeck: dealerHand)
             dealerCardValue.text = "\(valueOfDealerCards)"
-            dealerHasAce = hasAce(hand: dealerHand)
+
             dealerHitCounter += 1
             xValueForImageDealer += 50
             dealerImages.append(createImage(xLocation: xValueForImageDealer, yLocation: yValueForImageDealer, imageToAdd: dealerHand[dealerHitCounter].image))
             print("Value of cards for dealer: \(valueOfDealerCards)")
             print("Delear has Ace: \(dealerHasAce)")
-            if valueOfDealerCards > 21 && dealerHasAce{
-                valueOfDealerCards -= forEachAceInHand(hand: dealerHand)
-                if dealerDeductedTwoAces{
-                    valueOfDealerCards += 10
-                }
-                dealerCardValue.text = "\(valueOfDealerCards)"
-            }
+
             if valueOfDealerCards > 21 {
                 resultLabel.text = "Dealer bust with: \(valueOfDealerCards)"
                 dealerBust =  true
@@ -287,16 +251,9 @@ class ViewController: UIViewController {
     func playerPullACard(){
         cardDeck.checkForDeckEmpty()
         playerHand.append(cardDeck.deckOfCards.removeFirst())
-        valueOfPlayerCards = calculateHandValue(handDek: playerHand)
+        valueOfPlayerCards = calculateHandValue(handDeck: playerHand)
         playerCardValue.text = "\(valueOfPlayerCards)"
-        playerHasAce = hasAce(hand: playerHand)
-        if valueOfPlayerCards > 21 && playerHasAce{
-            valueOfPlayerCards -= forEachAceInHand(hand: playerHand)
-            if playerDeductedTwoAces{
-                valueOfPlayerCards += 10
-            }
-        }
-        playerCardValue.text = "\(valueOfPlayerCards)"
+        
         playerHitCounter += 1
         xValueForImagePlayer += 50
         playerImages.append(createImage(xLocation: xValueForImagePlayer, yLocation: yValueForImagePlayer, imageToAdd: playerHand[playerHitCounter].image))
@@ -326,12 +283,37 @@ class ViewController: UIViewController {
     }
     
 
-    func calculateHandValue(handDek: [Card]) -> Int{
+    func calculateHandValue(handDeck: [Card]) -> Int{
         var valuteToReturn = 0
-        for card in handDek {
-            valuteToReturn += card.value
+        var numberOfAces = 0
+        var twoAces = false
+        
+        if handDeck[0].name == "A" && handDeck[1].name == "A"{
+            twoAces = true
         }
+        for card in handDeck {
+            valuteToReturn += card.value
+            if card.name == "A"{
+                numberOfAces += 1
+            }
+        }
+        if valuteToReturn > 21 && hasAce(hand: handDeck) {
+            if twoAces {
+                valuteToReturn += 10
+            }
+            for _ in 1...numberOfAces {
+                valuteToReturn -= 10
+            }
+            if handDeck.count >= 3 && twoAces && valuteToReturn > 21{
+                    valuteToReturn -= 10
+            }
+        }
+       
+        
+        
+        
         return valuteToReturn
+        
     }
 
     func hasAce(hand: [Card]) -> Bool{
